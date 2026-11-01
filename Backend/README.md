@@ -1,10 +1,10 @@
 # INDKAN backend
 
-The backend runs two separate FastAPI services backed by the same PostgreSQL
-database. Authentication data is handled by the Auth User Content service.
-Product-content tables are declared as Python classes in
-`Fruit Content/Api/models` and created automatically when the Fruit Content
-service starts.
+The backend contains separate Auth User Content and Fruit Content API modules
+that can run together through `Backend/main.py` as one FastAPI service, backed
+by the same PostgreSQL database. Product-content tables are declared as Python
+classes in `Fruit Content/Api/models`; auth and product tables are initialized
+at backend startup.
 
 - `Auth User Content/Api`: registration, login, logout, profiles, passwords,
   user listing, and role management.
@@ -55,6 +55,34 @@ The example passwords are intended only for local development. Set private
 `DB_PASSWORD` and `PGADMIN_DEFAULT_PASSWORD` values in the root `.env` file
 before using this setup outside your local machine.
 
+### Deploy a single backend URL to Render
+
+The root `render.yaml` defines one Render web service for the combined backend
+and one static frontend. The backend Dockerfile starts both existing API
+surfaces in one FastAPI application: authentication remains under `/api/auth`,
+and products, orders, and other Fruit Content routes remain under `/api`.
+Connect the repository to Render and create a Blueprint.
+
+Set `DATABASE_URL` to the hosted PostgreSQL connection string and set
+`JWT_SECRET` to a private random value of at least 32 bytes on the single
+backend service. After Render assigns the frontend URL, set `CORS_ORIGINS` to
+that exact origin (without a trailing slash). Set the frontend's
+`VITE_API_BASE_URL` to the backend service URL, for example
+`https://fruit-house-backend.onrender.com`. The frontend derives both API base
+paths from this one URL. Frontend variables are baked in at build time, so
+redeploy the frontend after changing them. The combined backend serves `/health`
+for Render health checks.
+
+Keep the database URL, JWT secret, and other credentials in Render's
+environment settings; do not commit them to the repository. The backend binds
+to Render's runtime `PORT`.
+
+Product image uploads are written beneath
+`/app/Fruit Content/Api/uploads`. Render's container filesystem is ephemeral
+by default, so the Blueprint attaches a 1 GB persistent disk at that exact path
+and uses the Starter web-service plan. Review Render's current pricing before
+deploying. The disk preserves uploaded files across deploys and restarts.
+
 Both APIs use the same `JWT_SECRET` to sign and verify seven-day access tokens.
 Generate a secret with
 `python -c "import secrets; print(secrets.token_urlsafe(48))"` and keep it
@@ -70,9 +98,9 @@ administrator by first-account bootstrap. An initial administrator must be
 provisioned separately before owner employee IDs can be issued.
 
 The browser-to-API URLs are centralized in
-`Frontend/View/src/connection/config.ts`. To override them for the Vite
-frontend, copy `Frontend/View/.env.example` to `Frontend/View/.env.local` and
-edit `VITE_AUTH_API_URL` or `VITE_FRUIT_API_URL`. Add the frontend origin to
+`Frontend/View/src/connection/config.ts`. Set `VITE_API_BASE_URL` to the single
+backend origin, or optionally override the Auth and Fruit API paths separately
+with `VITE_AUTH_API_URL` and `VITE_FRUIT_API_URL`. Add the frontend origin to
 `CORS_ORIGINS` if it differs from the local defaults.
 
 Frontend API clients are exported through
@@ -83,17 +111,15 @@ are not synchronized with PostgreSQL.
 
 ### Run without Docker
 
-Install dependencies into both Python environments:
+Install dependencies into the Python environment used to run the combined
+backend:
 
 ```powershell
 & ".\Auth User Content\env\Scripts\python.exe" -m pip install -r requirements.txt
-& ".\Fruit Content\env\Scripts\python.exe" -m pip install -r requirements.txt
 ```
 
-Set `DATABASE_URL` in `Backend/.env`, `Fruit Content/.env`, or the shell. Set
-`JWT_SECRET` in `Backend/.env` for both APIs. The APIs load those files
-automatically; existing shell variables take precedence, and `Backend/.env`
-takes precedence over `Fruit Content/.env`.
+Set `DATABASE_URL` and `JWT_SECRET` in `Backend/.env` or the shell. Existing
+shell variables take precedence over `.env` values.
 `DATABASE_URL` is preferred whenever it is set. Otherwise, provide all five
 `DB`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, and `DB_PORT` settings. Individual
 password settings support reserved URL characters without URL encoding.
@@ -107,17 +133,15 @@ For passwords containing reserved URL characters, percent-encode them in the
 URL. Set `CORS_ORIGINS` to a comma-separated origin list if the frontend is not
 running at `http://localhost:2000` or `http://127.0.0.1:2000`.
 
-Run these commands from the `Backend` directory, each in its own terminal:
+Run the combined backend from the `Backend` directory:
 
 ```powershell
-& ".\Auth User Content\env\Scripts\python.exe" -m uvicorn Api.main:app --app-dir "Auth User Content" --host 0.0.0.0 --port 3000 --reload
+& ".\Auth User Content\env\Scripts\python.exe" -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-```powershell
-& ".\Fruit Content\env\Scripts\python.exe" -m uvicorn Api.main:app --app-dir "Fruit Content" --host 0.0.0.0 --port 4000 --reload
-```
-
-API docs: `http://127.0.0.1:3000/docs` and `http://127.0.0.1:4000/docs`.
+Set `VITE_API_BASE_URL=http://127.0.0.1:8000` in
+`Frontend/View/.env.local`. The combined backend serves both APIs and their
+documentation at `http://127.0.0.1:8000/docs`.
 
 Both APIs return structured request-validation errors and preserve explicit
 HTTP error details. Unexpected server errors are logged with a request ID and

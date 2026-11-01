@@ -73,6 +73,38 @@ SessionFactory = async_sessionmaker(engine, expire_on_commit=False)
 
 async def create_auth_tables() -> None:
     async with engine.begin() as connection:
+        await connection.execute(
+            text(
+                """
+                CREATE TABLE IF NOT EXISTS customers (
+                    customer_id UUID PRIMARY KEY,
+                    full_name VARCHAR(120) NOT NULL,
+                    email VARCHAR(254) NOT NULL UNIQUE,
+                    password_hash VARCHAR(512) NOT NULL,
+                    contract_number VARCHAR(50),
+                    phone VARCHAR(32),
+                    address VARCHAR(2000),
+                    role VARCHAR(20) NOT NULL DEFAULT 'customer',
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+                )
+                """
+            )
+        )
+        await connection.execute(
+            text(
+                """
+                CREATE TABLE IF NOT EXISTS auth_sessions (
+                    session_id UUID PRIMARY KEY,
+                    customer_id UUID NOT NULL REFERENCES customers(customer_id)
+                        ON DELETE CASCADE,
+                    token_hash VARCHAR(64) NOT NULL UNIQUE,
+                    expires_at TIMESTAMPTZ NOT NULL,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+                    revoked_at TIMESTAMPTZ
+                )
+                """
+            )
+        )
         await connection.run_sync(Base.metadata.create_all)
         await connection.execute(
             text(

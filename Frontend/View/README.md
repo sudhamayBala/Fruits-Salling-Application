@@ -12,15 +12,17 @@ npm run dev
 ```
 
 Open `http://localhost:2000`. API URLs are configured centrally in
-`src/connection/config.ts` and can be overridden with `VITE_AUTH_API_URL` and
-`VITE_FRUIT_API_URL` in `.env.local`. Frontend pages should import API clients
+`src/connection/config.ts`. Set `VITE_API_BASE_URL` to use one backend origin,
+or override it with `VITE_AUTH_API_URL` and `VITE_FRUIT_API_URL` in `.env.local`.
+Frontend pages should import API clients
 from `src/connection` rather than defining their own backend URLs.
 
-The Auth API defaults to `http://127.0.0.1:3000/api/auth`; the Fruit API
-defaults to `http://127.0.0.1:4000/api`. The API servers must allow the
-frontend origin in their `CORS_ORIGINS` setting. Cart, order-history, dealer,
-export, packaging, and coming-soon utilities still store state in browser
-`localStorage`; that data is not synchronized to the backend.
+Without `VITE_API_BASE_URL`, the Auth API defaults to
+`http://127.0.0.1:3000/api/auth` and the Fruit API defaults to
+`http://127.0.0.1:4000/api`. The backend must allow the frontend origin in its
+`CORS_ORIGINS` setting. Cart, order-history, dealer, export, packaging, and
+coming-soon utilities still store state in browser `localStorage`; that data is
+not synchronized to the backend.
 
 Currently, two official plugins are available:
 

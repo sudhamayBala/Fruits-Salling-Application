@@ -8,8 +8,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY shared ./shared
-COPY ["Auth User Content/Api", "./Auth User Content/Api"]
-COPY ["Fruit Content/Api", "./Fruit Content/Api"]
+COPY . .
 
-EXPOSE 2026 2027
+EXPOSE 10000
+
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port ${PORT:-10000}"]

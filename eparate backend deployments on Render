@@ -1,0 +1,146 @@
+[1mdiff --git a/.env.example b/.env.example[m
+[1mindex 42154e7..29907e5 100644[m
+[1m--- a/.env.example[m
+[1m+++ b/.env.example[m
+[36m@@ -6,3 +6,5 @@[m [mALLOW_FIRST_ADMIN_BOOTSTRAP=false[m
+ PGADMIN_DEFAULT_EMAIL=admin@fruithouse.local[m
+ PGADMIN_DEFAULT_PASSWORD=change-this-pgadmin-password[m
+ CORS_ORIGINS=http://localhost:2000,http://127.0.0.1:2000[m
+[32m+[m[32m# For Render, set DATABASE_URL, JWT_SECRET, and CORS_ORIGINS on both API services.[m
+[32m+[m[32m# Use the same database URL and JWT secret; set CORS_ORIGINS to the frontend URL.[m
+[1mdiff --git a/Backend/Dockerfile.auth b/Backend/Dockerfile.auth[m
+[1mnew file mode 100644[m
+[1mindex 0000000..fbc241a[m
+[1m--- /dev/null[m
+[1m+++ b/Backend/Dockerfile.auth[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32mFROM python:3.12-slim[m
+[32m+[m
+[32m+[m[32mENV PYTHONDONTWRITEBYTECODE=1 \[m
+[32m+[m[32m    PYTHONUNBUFFERED=1[m
+[32m+[m
+[32m+[m[32mWORKDIR /app[m
+[32m+[m
+[32m+[m[32mCOPY requirements.txt .[m
+[32m+[m[32mRUN pip install --no-cache-dir -r requirements.txt[m
+[32m+[m
+[32m+[m[32mCOPY shared ./shared[m
+[32m+[m[32mCOPY ["Auth User Content/Api", "./Auth User Content/Api"][m
+[32m+[m
+[32m+[m[32mEXPOSE 10000[m
+[32m+[m
+[32m+[m[32mCMD ["sh", "-c", "uvicorn Api.main:app --app-dir '/app/Auth User Content' --host 0.0.0.0 --port ${PORT:-10000}"][m
+[1mdiff --git a/Backend/Dockerfile.fruit b/Backend/Dockerfile.fruit[m
+[1mnew file mode 100644[m
+[1mindex 0000000..be4dca0[m
+[1m--- /dev/null[m
+[1m+++ b/Backend/Dockerfile.fruit[m
+[36m@@ -0,0 +1,16 @@[m
+[32m+[m[32mFROM python:3.12-slim[m
+[32m+[m
+[32m+[m[32mENV PYTHONDONTWRITEBYTECODE=1 \[m
+[32m+[m[32m    PYTHONUNBUFFERED=1[m
+[32m+[m
+[32m+[m[32mWORKDIR /app[m
+[32m+[m
+[32m+[m[32mCOPY requirements.txt .[m
+[32m+[m[32mRUN pip install --no-cache-dir -r requirements.txt[m
+[32m+[m
+[32m+[m[32mCOPY shared ./shared[m
+[32m+[m[32mCOPY ["Fruit Content/Api", "./Fruit Content/Api"][m
+[32m+[m
+[32m+[m[32mEXPOSE 10000[m
+[32m+[m
+[32m+[m[32mCMD ["sh", "-c", "uvicorn Api.main:app --app-dir '/app/Fruit Content' --host 0.0.0.0 --port ${PORT:-10000}"][m
+[1mdiff --git a/Backend/README.md b/Backend/README.md[m
+[1mindex f2d3e07..a4ebb7c 100644[m
+[1m--- a/Backend/README.md[m
+[1m+++ b/Backend/README.md[m
+[36m@@ -55,6 +55,32 @@[m [mThe example passwords are intended only for local development. Set private[m
+ `DB_PASSWORD` and `PGADMIN_DEFAULT_PASSWORD` values in the root `.env` file[m
+ before using this setup outside your local machine.[m
+ [m
+[32m+[m[32m### Deploy separate services to Render[m
+[32m+[m
+[32m+[m[32mThe root `render.yaml` defines separate Render services for the Auth API, Fruit[m
+[32m+[m[32mAPI, and frontend. Each API builds from its own Dockerfile while sharing the[m
+[32m+[m[32mbackend requirements and common modules. Connect the repository to Render and[m
+[32m+[m[32mcreate a Blueprint; Render will request the unsynced environment variables.[m
+[32m+[m
+[32m+[m[32mSet `DATABASE_URL` on both APIs to the same hosted PostgreSQL connection string,[m
+[32m+[m[32mand set `JWT_SECRET` to the same private random value on both services. Once[m
+[32m+[m[32mRender assigns the frontend URL, set `CORS_ORIGINS` on both APIs to that exact[m
+[32m+[m[32morigin (for example, `https://fruit-house-frontend.onrender.com`, without a[m
+[32m+[m[32mtrailing slash). The frontend build variables must be the full API base URLs:[m
+[32m+[m[32m`VITE_AUTH_API_URL=https://<auth-service>.onrender.com/api/auth` and[m
+[32m+[m[32m`VITE_FRUIT_API_URL=https://<fruit-service>.onrender.com/api`. These values are[m
+[32m+[m[32mbaked into the static frontend at build time, so redeploy it after changing[m
+[32m+[m[32mthem. Each API has a `/health` endpoint for Render health checks.[m
+[32m+[m
+[32m+[m[32mKeep the database URL, JWT secret, and any other credentials in Render's[m
+[32m+[m[32menvironment settings; do not commit them to the repository. The services use[m
+[32m+[m[32mRender's `PORT` at runtime and require no fixed public port configuration.[m
+[32m+[m[32mProduct image uploads are written to the Fruit API filesystem. Render's[m
+[32m+[m[32mcontainer filesystem is ephemeral by default. The Render Blueprint attaches a[m
+[32m+[m[32m1 GB persistent disk at `/app/Fruit Content/Api/uploads` and uses the Starter[m
+[32m+[m[32mweb-service plan for the Fruit API; review Render's current pricing before[m
+[32m+[m[32mdeploying. The disk preserves uploaded files across deploys and restarts.[m
+[32m+[m
+ Both APIs use the same `JWT_SECRET` to sign and verify seven-day access tokens.[m
+ Generate a secret with[m
+ `python -c "import secrets; print(secrets.token_urlsafe(48))"` and keep it[m
+[1mdiff --git a/render.yaml b/render.yaml[m
+[1mnew file mode 100644[m
+[1mindex 0000000..8a236a0[m
+[1m--- /dev/null[m
+[1m+++ b/render.yaml[m
+[36m@@ -0,0 +1,49 @@[m
+[32m+[m[32mservices:[m
+[32m+[m[32m  - type: web[m
+[32m+[m[32m    name: fruit-house-auth-api[m
+[32m+[m[32m    runtime: docker[m
+[32m+[m[32m    dockerContext: ./Backend[m
+[32m+[m[32m    dockerfilePath: ./Backend/Dockerfile.auth[m
+[32m+[m[32m    healthCheckPath: /health[m
+[32m+[m[32m    envVars:[m
+[32m+[m[32m      - key: DATABASE_URL[m
+[32m+[m[32m        sync: false[m
+[32m+[m[32m      - key: JWT_SECRET[m
+[32m+[m[32m        sync: false[m
+[32m+[m[32m      - key: CORS_ORIGINS[m
+[32m+[m[32m        sync: false[m
+[32m+[m
+[32m+[m[32m  - type: web[m
+[32m+[m[32m    name: fruit-house-fruit-api[m
+[32m+[m[32m    runtime: docker[m
+[32m+[m[32m    plan: starter[m
+[32m+[m[32m    dockerContext: ./Backend[m
+[32m+[m[32m    dockerfilePath: ./Backend/Dockerfile.fruit[m
+[32m+[m[32m    healthCheckPath: /health[m
+[32m+[m[32m    disk:[m
+[32m+[m[32m      name: fruit-house-uploads[m
+[32m+[m[32m      mountPath: /app/Fruit Content/Api/uploads[m
+[32m+[m[32m      sizeGB: 1[m
+[32m+[m[32m    envVars:[m
+[32m+[m[32m      - key: DATABASE_URL[m
+[32m+[m[32m        sync: false[m
+[32m+[m[32m      - key: JWT_SECRET[m
+[32m+[m[32m        sync: false[m
+[32m+[m[32m      - key: CORS_ORIGINS[m
+[32m+[m[32m        sync: false[m
+[32m+[m
+[32m+[m[32m  - type: web[m
+[32m+[m[32m    name: fruit-house-frontend[m
+[32m+[m[32m    runtime: static[m
+[32m+[m[32m    rootDir: Frontend/View[m
+[32m+[m[32m    buildCommand: npm ci && npm run build[m
+[32m+[m[32m    staticPublishPath: ./dist[m
+[32m+[m[32m    routes:[m
+[32m+[m[32m      - type: rewrite[m
+[32m+[m[32m        source: /*[m
+[32m+[m[32m        destination: /index.html[m
+[32m+[m[32m    envVars:[m
+[32m+[m[32m      - key: VITE_AUTH_API_URL[m
+[32m+[m[32m        sync: false[m
+[32m+[m[32m      - key: VITE_FRUIT_API_URL[m
+[32m+[m[32m        sync: false[m
