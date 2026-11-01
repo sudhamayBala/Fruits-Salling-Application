@@ -63,15 +63,14 @@ surfaces in one FastAPI application: authentication remains under `/api/auth`,
 and products, orders, and other Fruit Content routes remain under `/api`.
 Connect the repository to Render and create a Blueprint.
 
-Set `DATABASE_URL` to the hosted PostgreSQL connection string and set
-`JWT_SECRET` to a private random value of at least 32 bytes on the single
-backend service. After Render assigns the frontend URL, set `CORS_ORIGINS` to
-that exact origin (without a trailing slash). Set the frontend's
-`VITE_API_BASE_URL` to the backend service URL, for example
-`https://fruit-house-backend.onrender.com`. The frontend derives both API base
-paths from this one URL. Frontend variables are baked in at build time, so
-redeploy the frontend after changing them. The combined backend serves `/health`
-for Render health checks.
+Set `DATABASE_URL` to the hosted PostgreSQL connection string on the backend
+service. Render generates a secure `JWT_SECRET`; the Blueprint supplies the
+default frontend origin and backend URL based on their service names. The
+frontend derives both API base paths from this one URL. If you change either
+service name or use a custom frontend domain, update `CORS_ORIGINS` and
+`VITE_API_BASE_URL` accordingly. Frontend variables are baked in at build time,
+so redeploy the frontend after changing them. The combined backend serves
+`/health` for Render health checks.
 
 Keep the database URL, JWT secret, and other credentials in Render's
 environment settings; do not commit them to the repository. The backend binds
