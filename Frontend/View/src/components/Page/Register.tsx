@@ -5,7 +5,7 @@ import { register } from "../../connection";
 import "../../styles/page/Auth.css";
 
 const ownerEmailPattern =
-  /^[a-z0-9-]+\.\d{4}\.[a-z0-9-]+\.\d{6}@indkan\.com$/i;
+  /^[a-z0-9-]+\.\d{4}\.[a-z0-9-]+\.\d{5,6}@indkan\.com$/i;
 const legacyOwnerEmailPattern =
   /^[a-z0-9_-]+\.\d{4}\.[a-z0-9_-]+\.\d{6}\.?@indikan\.com$/i;
 const ownerEmailDomain = /@indi?kan\.com$/i;

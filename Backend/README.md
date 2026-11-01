@@ -181,8 +181,10 @@ Authentication:
 - Personal-email registration creates a client credential and generates its
   unique client contract number; issued
   `first-name.joining-year.employee-type.ID@indkan.com` registration creates
-  an owner credential and does not require a client contract number. Login
-  also recognizes previously issued legacy owner emails in the
+  an owner credential and does not require a client contract number. The
+  current owner email format accepts five- or six-digit IDs; registration still
+  requires the ID and exact email to have been issued by an admin. Login also
+  recognizes previously issued legacy owner emails in the
   `first-name.employee-type.joining-year.ID@indkan.com` format. All owner
   logins still require a matching stored credential and password. Login returns
   the account role so the frontend opens the owner dashboard or client message

@@ -37,7 +37,7 @@ from ..services.auth import (
 
 router = APIRouter(prefix="/api/auth", tags=["authentication"])
 OWNER_EMAIL_PATTERN = re.compile(
-    r"^[a-z0-9-]+\.\d{4}\.[a-z0-9-]+\.([0-9]{6})@indkan\.com$"
+    r"^[a-z0-9-]+\.\d{4}\.[a-z0-9-]+\.([0-9]{5,6})@indkan\.com$"
 )
 LEGACY_OWNER_EMAIL_PATTERN = re.compile(
     r"^[a-z0-9_-]+\.\d{4}\.[a-z0-9_-]+\.([0-9]{6})\.?@indikan\.com$"

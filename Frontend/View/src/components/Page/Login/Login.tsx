@@ -5,7 +5,7 @@ import { ApiRequestError, login } from "../../../connection";
 import "../../../styles/page/Login.css";
 
 const ownerEmailPattern =
-  /^[a-z0-9-]+\.\d{4}\.[a-z0-9-]+\.\d{6}@indkan\.com$/i;
+  /^[a-z0-9-]+\.\d{4}\.[a-z0-9-]+\.\d{5,6}@indkan\.com$/i;
 const legacyOwnerEmailPattern =
   /^[a-z0-9_-]+\.\d{4}\.[a-z0-9_-]+\.\d{6}\.?@indikan\.com$/i;
 const positionalLegacyOwnerEmailPattern =
@@ -75,7 +75,7 @@ function Login() {
               autoComplete="email"
               maxLength={254}
               placeholder="you@example.com"
-              defaultValue="fruit.login.2026.99999@indkan.com"
+              defaultValue="fruit.2026.login.99999@indkan.com"
               required
             />
             <span className="auth-help">
