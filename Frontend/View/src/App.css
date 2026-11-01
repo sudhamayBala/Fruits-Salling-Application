@@ -1,0 +1,154 @@
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.page-content {
+  width: 100%;
+  flex: 1;
+}
+
+.page-placeholder {
+  padding: 48px 0;
+  color: #26382c;
+}
+
+.page-placeholder h1 {
+  margin: 0 0 12px;
+  color: #168343;
+}
+
+.page-placeholder p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.app-error-boundary {
+  display: grid;
+  min-height: 100vh;
+  align-content: center;
+  justify-items: center;
+  gap: 12px;
+  padding: 24px;
+  color: #26382c;
+  text-align: center;
+}
+
+.app-error-boundary h1,
+.app-error-boundary p {
+  margin: 0;
+}
+
+.app-error-boundary button {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  background: #168343;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.home-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.9fr);
+  align-items: center;
+  gap: 32px;
+  min-height: 420px;
+  margin: 36px 0;
+  padding: 42px clamp(22px, 5vw, 64px);
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(125deg, #f4faef, #fff8db);
+}
+
+.home-hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.home-hero-eyebrow {
+  margin: 0 0 12px;
+  color: #168343;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-hero h1 {
+  max-width: 600px;
+  margin: 0;
+  color: #173b26;
+  font-size: clamp(2.4rem, 5vw, 4.5rem);
+  line-height: 1.04;
+}
+
+.home-hero-description {
+  max-width: 510px;
+  margin: 20px 0 0;
+  color: #526258;
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.home-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.hero-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border: 1px solid #168343;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.hero-button:hover {
+  transform: translateY(-2px);
+}
+
+.hero-button-primary {
+  color: #fff;
+  background: #168343;
+}
+
+.hero-button-primary:hover {
+  background: #106633;
+}
+
+.hero-button-secondary {
+  color: #168343;
+  background: #fff;
+}
+
+.home-hero-art {
+  width: 100%;
+  min-height: 320px;
+  background: url('/fruit-hero.svg') center / contain no-repeat;
+}
+
+@media (max-width: 700px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 34px 24px 20px;
+  }
+
+  .home-hero-art {
+    min-height: 230px;
+  }
+
+}

@@ -1,0 +1,157 @@
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0;
+}
+
+body,
+.app-shell,
+.page-content,
+.body-warper,
+.body-content {
+  background: transparent;
+}
+
+.app-shell {
+  min-height: 100vh;
+}
+
+.page-content {
+  display: flex;
+  width: 100%;
+  flex: 1 1 auto;
+}
+
+.body-warper {
+  display: flex;
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, #fff3e8, #e8f5df);
+}
+
+.body-content {
+  display: flex;
+  width: 100%;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: stretch;
+  box-sizing: border-box;
+  padding: 28px clamp(18px, 3vw, 48px);
+}
+
+.body-content > :is(
+  .about-page,
+  .bulk-order-page,
+  .cart-page,
+  .catalog-page,
+  .contracts-page,
+  .distributor-page,
+  .exports-page,
+  .gallery-page,
+  .order-status-page,
+  .owner-access,
+  .owner-dashboard,
+  .packaging-page,
+  .page-placeholder,
+  .products-section,
+  .category-section,
+  .product-details-page
+) {
+  width: 100%;
+  max-width: none;
+  margin-right: 0;
+  margin-left: 0;
+  box-sizing: border-box;
+}
+
+.body-content > .home-hero {
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:is(
+  .home-hero,
+  .about-hero,
+  .about-values,
+  .about-value-card,
+  .about-image-note,
+  .owner-stat,
+  .owner-panel,
+  .owner-employee-card,
+  .owner-employee-result,
+  .owner-workspace-card,
+  .owner-navigation,
+  .contracts-notification,
+  .contracts-empty,
+  .contracts-page .dealer-table,
+  .distributor-table,
+  .dealer-table,
+  .dealer-contact-item,
+  .gallery-card,
+  .gallery-message,
+  .gallery-error,
+  .packaging-table,
+  .packaging-page-empty,
+  .packaging-message,
+  .packaging-error,
+  .exports-page .export-table,
+  .export-table,
+  .export-empty,
+  .export-timeline-card,
+  .cart-table-scroll,
+  .cart-checkout,
+  .cart-empty,
+  .cart-order-success,
+  .bulk-order-form,
+  .bulk-order-result,
+  .catalog-card,
+  .catalog-empty,
+  .order-status-table-scroll,
+  .order-status-empty,
+  .order-status-error,
+  .order-status-notice,
+  .analytics-card,
+  .analytics-summary > div
+) {
+  border-color: rgb(20 55 31 / 28%);
+  background: rgb(255 255 255 / 14%) !important;
+  box-shadow: 0 6px 22px rgb(20 45 26 / 10%) !important;
+  backdrop-filter: blur(8px);
+}
+
+.auth-shell {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(135deg, #fff3e8, #e8f5df);
+}
+
+.auth-shell .body-warper {
+  min-height: 100vh;
+}
+
+.auth-shell .body-content {
+  padding: 0;
+}
+
+.auth-shell .auth-page {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.auth-shell .auth-card,
+.auth-shell .auth-aside {
+  border-width: 1px;
+  border-color: rgb(20 55 31 / 30%);
+  background: rgb(255 255 255 / 14%) !important;
+  box-shadow: 0 10px 28px rgb(20 45 26 / 12%) !important;
+  backdrop-filter: blur(10px);
+}

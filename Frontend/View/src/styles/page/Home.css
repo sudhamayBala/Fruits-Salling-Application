@@ -1,0 +1,110 @@
+
+.home-hero {
+  width: 100%;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 40px 6%;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.home-hero-copy {
+  flex: 1;
+  max-width: 560px;
+}
+
+.home-hero-eyebrow {
+  color: #27833b;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.home-hero-copy h1 {
+  color: #f5930a;
+  font-size: clamp(36px, 4vw, 60px);
+  line-height: 1.15;
+  margin: 20px 0;
+}
+
+.home-hero-description {
+  color: #158f05;
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.home-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 28px;
+}
+
+.hero-button {
+  display: inline-block;
+  padding: 13px 23px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.hero-button-primary {
+  background: #27833b;
+  color: white;
+}
+
+.hero-button-primary:hover {
+  background: #1c642c;
+}
+
+.hero-button-secondary {
+  color: #27833b;
+  border: 2px solid #27833b;
+}
+
+.hero-button-secondary:hover {
+  background: #27833b;
+  color: white;
+}
+
+.home-hero-art {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.fruit-basket-image {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  object-fit: contain;
+  background: transparent;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .home-hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 35px 20px;
+  }
+
+  .home-hero-actions {
+    justify-content: center;
+  }
+
+  .home-hero-art {
+    width: 100%;
+  }
+
+  .fruit-basket-image {
+    max-width: 420px;
+  }
+}

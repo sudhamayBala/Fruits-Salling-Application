@@ -1,0 +1,147 @@
+.dealer-management {
+  margin-bottom: 24px;
+}
+
+.dealer-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.dealer-form label {
+  display: grid;
+  gap: 7px;
+  color: #344a39;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.dealer-form input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  border: 1px solid #cfdccf;
+  border-radius: 8px;
+  background: #fff;
+  color: #23392b;
+  font: inherit;
+  font-weight: 400;
+}
+
+.dealer-form input:focus {
+  border-color: #168343;
+  outline: 2px solid rgb(22 131 67 / 15%);
+}
+
+.dealer-feedback {
+  grid-column: 1 / -1;
+}
+
+.dealer-admin-table {
+  margin-top: 22px;
+}
+
+.dealer-table-scroll {
+  overflow-x: auto;
+}
+
+.dealer-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.dealer-table th,
+.dealer-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #edf1ec;
+  vertical-align: top;
+}
+
+.dealer-table th {
+  color: #617166;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.dealer-table td {
+  color: #344a39;
+}
+
+.dealer-table a {
+  color: #168343;
+  overflow-wrap: anywhere;
+}
+
+.dealer-empty {
+  color: #617166 !important;
+  text-align: center;
+}
+
+.dealer-storage-note {
+  margin: 14px 0 0;
+  color: #617166;
+  font-size: 0.85rem;
+}
+
+.contracts-page {
+  max-width: 1160px;
+  min-height: 360px;
+  margin: 0 auto;
+  padding: 38px 20px 56px;
+  color: #23392b;
+}
+
+.contracts-header {
+  margin-bottom: 26px;
+}
+
+.contracts-eyebrow {
+  margin: 0 0 8px;
+  color: #168343;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.contracts-header h1 {
+  margin: 0;
+  color: #173b26;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.contracts-header > p:last-child {
+  margin: 8px 0 0;
+  color: #617166;
+  line-height: 1.6;
+}
+
+.contracts-page .dealer-table {
+  overflow: hidden;
+  border: 1px solid #e1e9df;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 22px rgb(26 56 34 / 5%);
+}
+
+.contracts-empty {
+  padding: 32px 20px;
+  border: 1px solid #e1e9df;
+  border-radius: 12px;
+  background: #fff;
+  color: #617166;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .dealer-form {
+    grid-template-columns: 1fr;
+  }
+
+  .contracts-page {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+}

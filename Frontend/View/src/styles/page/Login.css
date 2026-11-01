@@ -1,0 +1,9 @@
+@import "./Auth.css";
+
+.auth-shell.auth-login-shell {
+  background: transparent;
+}
+
+.auth-shell.auth-login-shell .auth-login-page {
+  background: transparent;
+}

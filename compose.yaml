@@ -1,0 +1,84 @@
+services:
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@fruithouse.local}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-fruit_house_pgadmin}
+      PGADMIN_SERVER_JSON_FILE: /pgadmin4/servers.json
+    ports:
+      - "127.0.0.1:5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  auth-api:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    command:
+      - uvicorn
+      - Api.main:app
+      - --app-dir
+      - /app/Auth User Content
+      - --host
+      - 0.0.0.0
+      - --port
+      - "2027"
+    environment: &backend-environment
+      DB: ${DB:-FRUITS}
+      DB_USER: ${DB_USER:-postgres}
+      DB_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in the project root .env file}
+      DB_HOST: host.docker.internal
+      DB_PORT: "5432"
+      DATABASE_URL: ""
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in the project root .env file}
+      ALLOW_FIRST_ADMIN_BOOTSTRAP: ${ALLOW_FIRST_ADMIN_BOOTSTRAP:-false}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:2000,http://127.0.0.1:2000}
+    ports:
+      - "3000:2027"
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:2027/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  fruit-api:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    command:
+      - uvicorn
+      - Api.main:app
+      - --app-dir
+      - /app/Fruit Content
+      - --host
+      - 0.0.0.0
+      - --port
+      - "2026"
+    environment: *backend-environment
+    ports:
+      - "4000:2026"
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:2026/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  frontend:
+    build:
+      context: ./Frontend/View
+      dockerfile: Dockerfile
+    depends_on:
+      auth-api:
+        condition: service_healthy
+      fruit-api:
+        condition: service_healthy
+    ports:
+      - "2000:80"
+
+volumes:
+  pgadmin_data:

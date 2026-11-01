@@ -1,0 +1,78 @@
+.distributor-page {
+  max-width: 1160px;
+  min-height: 360px;
+  margin: 0 auto;
+  padding: 38px 20px 56px;
+  color: #23392b;
+}
+
+.distributor-header {
+  margin-bottom: 26px;
+}
+
+.distributor-header h1 {
+  margin: 0;
+  color: #173b26;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.distributor-header > p:last-child {
+  margin: 8px 0 0;
+  color: #617166;
+  line-height: 1.6;
+}
+
+.distributor-table {
+  border: 1px solid #e1e9df;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 6px 22px rgb(26 56 34 / 5%);
+}
+
+.distributor-contract-cell {
+  min-width: 180px;
+}
+
+.distributor-contract-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #168343;
+  font: inherit;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.distributor-contract-button:hover {
+  color: #106633;
+}
+
+.distributor-contract-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.distributor-contract-actions .owner-primary-button,
+.distributor-contract-actions .owner-secondary-link {
+  min-height: 34px;
+  padding-right: 12px;
+  padding-left: 12px;
+  font-size: 0.84rem;
+}
+
+.distributor-contract-actions button:disabled {
+  border-color: #cfdccf;
+  color: #89938b;
+  cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+  .distributor-page {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+}

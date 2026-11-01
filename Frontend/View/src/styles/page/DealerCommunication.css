@@ -1,0 +1,728 @@
+.contracts-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.contracts-notification {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  border: 1px solid #e1e9df;
+  border-radius: 9px;
+  background: #fff;
+  color: #168343;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.contracts-notification:hover {
+  background: #eff8f1;
+}
+
+.contract-chat-cell {
+  text-align: right;
+}
+
+.owner-notification-link {
+  flex: 0 0 auto;
+}
+
+.direct-messages-page {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  gap: 18px;
+  color: #173b26;
+}
+
+.client-messages-page {
+  min-height: calc(100vh - 190px);
+  gap: 22px;
+  padding: clamp(18px, 3vw, 36px);
+  border: 1px solid rgb(50 69 143 / 18%);
+  border-radius: 22px;
+  background: transparent;
+  color: #20294b;
+  box-shadow: 0 16px 42px rgb(34 49 103 / 10%);
+}
+
+.client-messages-page .direct-messages-header {
+  align-items: flex-end;
+  padding: 8px 4px 18px;
+  border-bottom: 1px solid rgb(54 72 140 / 16%);
+}
+
+.client-messages-page .direct-messages-header h1 {
+  color: #20294b;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.client-messages-page .direct-messages-header p:last-child {
+  max-width: 620px;
+  color: #5b668a;
+  line-height: 1.6;
+}
+
+.client-messages-page .direct-messages-eyebrow {
+  color: #475bb1 !important;
+}
+
+.client-messages-retention {
+  max-width: 260px;
+  padding: 11px 14px;
+  border: 1px solid rgb(71 91 177 / 18%);
+  border-radius: 12px;
+  background: rgb(255 255 255 / 72%);
+  color: #485781;
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.client-messages-inbox {
+  min-height: min(680px, calc(100vh - 320px));
+  grid-template-columns: minmax(240px, 0.3fr) minmax(0, 1fr);
+  border-color: rgb(54 72 140 / 18%);
+  border-radius: 18px;
+  background: rgb(255 255 255 / 72%);
+  box-shadow: 0 10px 28px rgb(34 49 103 / 9%);
+}
+
+.client-messages-page .direct-messages-contacts {
+  border-right-color: rgb(54 72 140 / 14%);
+  background: rgb(242 245 255 / 68%);
+}
+
+.client-messages-page .direct-messages-contacts h2 {
+  color: #28345e;
+}
+
+.client-messages-page .direct-messages-profile-picker label {
+  color: #35416c;
+}
+
+.client-messages-page .direct-messages-profile-picker input,
+.client-messages-page .direct-messages-profile-picker select {
+  border-color: rgb(54 72 140 / 22%);
+  background: #fff;
+  color: #28345e;
+}
+
+.client-messages-page .direct-messages-profile-picker input:focus,
+.client-messages-page .direct-messages-profile-picker select:focus {
+  border-color: #5368c2;
+  outline-color: rgb(83 104 194 / 20%);
+}
+
+.client-messages-page .direct-messages-conversation {
+  background: rgb(255 255 255 / 48%);
+}
+
+.client-messages-page .direct-messages-conversation-header {
+  border-bottom-color: rgb(54 72 140 / 14%);
+}
+
+.client-messages-page .direct-messages-conversation-header h2 {
+  color: #20294b;
+}
+
+.client-messages-page .direct-messages-conversation-header p,
+.client-messages-page .direct-messages-empty {
+  color: #667194;
+}
+
+.client-messages-page .direct-message {
+  border-color: rgb(54 72 140 / 16%);
+  background: #f3f5fc;
+  color: #273253;
+}
+
+.client-messages-page .direct-message-own {
+  border-color: rgb(83 104 194 / 20%);
+  background: #e8edff;
+}
+
+.client-messages-page .direct-message time {
+  color: #737e9e;
+}
+
+.client-messages-page .direct-messages-compose {
+  border-top-color: rgb(54 72 140 / 14%);
+}
+
+.client-messages-page .direct-messages-compose textarea {
+  border-color: rgb(54 72 140 / 22%);
+  background: #fff;
+  color: #273253;
+}
+
+.client-messages-page .direct-messages-compose textarea:focus {
+  border-color: #5368c2;
+  outline-color: rgb(83 104 194 / 18%);
+}
+
+.client-messages-page .direct-messages-compose .owner-primary-button,
+.client-messages-page .direct-messages-voice-draft .owner-primary-button {
+  border-color: #465bb0;
+  background: #465bb0;
+  color: #fff;
+}
+
+.client-messages-page .direct-messages-compose .owner-primary-button:hover,
+.client-messages-page .direct-messages-voice-draft .owner-primary-button:hover {
+  background: #374990;
+}
+
+.client-messages-page .direct-messages-record-button,
+.client-messages-page .direct-messages-cancel-recording,
+.client-messages-page .direct-message-audio-button {
+  border-color: rgb(70 91 176 / 28%);
+  background: #fff;
+  color: #3d4f9a;
+}
+
+.direct-messages-header,
+.direct-messages-conversation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.direct-messages-header h1,
+.direct-messages-conversation-header h2 {
+  margin: 0;
+  color: #102b1a;
+}
+
+.direct-messages-header h1 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+.direct-messages-header p:last-child,
+.direct-messages-conversation-header p {
+  margin: 6px 0 0;
+  color: #294b34;
+}
+
+.direct-messages-eyebrow {
+  margin: 0 0 6px !important;
+  color: #075b2b !important;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.direct-messages-inbox {
+  display: grid;
+  min-height: min(620px, calc(100vh - 300px));
+  grid-template-columns: minmax(230px, 0.32fr) minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid rgb(20 55 31 / 28%);
+  border-radius: 14px;
+  background: rgb(255 255 255 / 14%);
+  box-shadow: 0 6px 22px rgb(20 45 26 / 10%);
+  backdrop-filter: blur(8px);
+}
+
+.direct-messages-contacts {
+  min-width: 0;
+  padding: 18px 12px;
+  border-right: 1px solid rgb(20 55 31 / 22%);
+}
+
+.direct-messages-contacts h2 {
+  margin: 0 8px 12px;
+  color: #102b1a;
+  font-size: 1.05rem;
+}
+
+.direct-messages-contacts ul {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.direct-messages-profile-picker {
+  display: grid;
+  gap: 14px;
+}
+
+.direct-messages-profile-picker label {
+  display: grid;
+  gap: 6px;
+  color: #173a23;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.direct-messages-profile-picker input,
+.direct-messages-profile-picker select {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  box-sizing: border-box;
+  padding: 9px 10px;
+  border: 1px solid rgb(20 55 31 / 35%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 55%);
+  color: #173a23;
+  font: inherit;
+}
+
+.direct-messages-profile-picker input:focus,
+.direct-messages-profile-picker select:focus {
+  border-color: #168343;
+  outline: 2px solid rgb(22 131 67 / 20%);
+}
+
+.direct-messages-contact {
+  display: grid;
+  width: 100%;
+  gap: 6px;
+  padding: 11px 10px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  color: #173a23;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.direct-messages-contact:hover,
+.direct-messages-contact-active {
+  border-color: rgb(22 131 67 / 35%);
+  background: rgb(22 131 67 / 12%);
+}
+
+.direct-messages-contact-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.direct-messages-contact-preview {
+  overflow: hidden;
+  color: #294b34;
+  font-size: 0.82rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.direct-messages-unread {
+  display: inline-grid;
+  min-width: 20px;
+  min-height: 20px;
+  place-items: center;
+  border-radius: 999px;
+  background: #075b2b;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.direct-messages-conversation {
+  display: grid;
+  min-width: 0;
+  grid-template-rows: auto minmax(180px, 1fr) auto;
+  padding: 18px;
+}
+
+.direct-messages-conversation-header {
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgb(20 55 31 / 22%);
+}
+
+.direct-messages-conversation-header h2 {
+  font-size: 1.15rem;
+}
+
+.direct-messages-history {
+  display: flex;
+  min-height: 180px;
+  max-height: 460px;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding: 16px 4px;
+}
+
+.direct-message {
+  display: grid;
+  max-width: min(78%, 680px);
+  align-self: flex-start;
+  gap: 5px;
+  padding: 10px 13px;
+  border: 1px solid rgb(20 55 31 / 18%);
+  border-radius: 12px 12px 12px 3px;
+  background: rgb(255 255 255 / 45%);
+  color: #173a23;
+  overflow-wrap: anywhere;
+}
+
+.direct-message-own {
+  align-self: flex-end;
+  border-color: rgb(22 131 67 / 35%);
+  border-radius: 12px 12px 3px 12px;
+  background: rgb(22 131 67 / 14%);
+}
+
+.direct-message p {
+  margin: 0;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.direct-message time {
+  color: #385a42;
+  font-size: 0.72rem;
+  text-align: right;
+}
+
+.direct-message audio,
+.direct-messages-voice-draft audio {
+  width: min(100%, 360px);
+}
+
+.direct-message-audio-button,
+.direct-messages-record-button,
+.direct-messages-cancel-recording {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid rgb(20 55 31 / 35%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 55%);
+  color: #173a23;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.direct-messages-compose {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: end;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgb(20 55 31 / 22%);
+}
+
+.direct-messages-compose textarea {
+  width: 100%;
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid rgb(20 55 31 / 35%);
+  border-radius: 8px;
+  background: rgb(255 255 255 / 50%);
+  color: #173a23;
+  font: inherit;
+  resize: vertical;
+}
+
+.direct-messages-compose textarea:focus {
+  border-color: #168343;
+  outline: 2px solid rgb(22 131 67 / 20%);
+}
+
+.direct-messages-compose button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.direct-messages-recording {
+  margin: 10px 0 0;
+  color: #9d2922;
+  font-weight: 700;
+}
+
+.direct-messages-voice-draft {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+}
+
+.direct-message-audio-button:disabled,
+.direct-messages-record-button:disabled,
+.direct-messages-cancel-recording:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.direct-messages-message,
+.direct-messages-empty {
+  color: #294b34;
+  line-height: 1.5;
+}
+
+.direct-messages-message {
+  padding: 20px;
+  border: 1px solid rgb(20 55 31 / 25%);
+  border-radius: 12px;
+  background: rgb(255 255 255 / 14%);
+}
+
+.direct-messages-message h1 {
+  margin-top: 0;
+  color: #102b1a;
+}
+
+.direct-messages-error {
+  margin: 0;
+  color: #8d2d24;
+  overflow-wrap: anywhere;
+}
+
+.direct-messages-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.dealer-communication-list {
+  margin-bottom: 24px;
+}
+
+.dealer-contact-list {
+  display: grid;
+  gap: 10px;
+}
+
+.dealer-contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 14px;
+  border: 1px solid #edf1ec;
+  border-radius: 9px;
+}
+
+.dealer-contact-item > div {
+  display: grid;
+  gap: 4px;
+}
+
+.dealer-contact-item > div span {
+  color: #617166;
+  font-size: 0.88rem;
+}
+
+.dealer-chat-backdrop {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgb(17 35 23 / 55%);
+}
+
+.dealer-chat-panel {
+  width: min(100%, 520px);
+  max-height: min(90vh, 760px);
+  overflow-y: auto;
+  padding: 24px;
+  border: 1px solid #e1e9df;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 18px 60px rgb(0 0 0 / 22%);
+  color: #23392b;
+}
+
+.dealer-chat-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.dealer-chat-header p {
+  margin: 0 0 6px;
+  color: #168343;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.dealer-chat-header h2 {
+  margin: 0;
+  color: #173b26;
+  font-size: 1.4rem;
+}
+
+.dealer-chat-close {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: #f3f8f0;
+  color: #344a39;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.dealer-chat-notice {
+  margin: 18px 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff5df;
+  color: #70551e;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.dealer-chat-form {
+  display: grid;
+  gap: 10px;
+}
+
+.dealer-chat-form label,
+.dealer-voice-tools h3 {
+  color: #344a39;
+  font-weight: 700;
+}
+
+.dealer-chat-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #cfdccf;
+  border-radius: 8px;
+  color: #23392b;
+  font: inherit;
+  resize: vertical;
+}
+
+.dealer-chat-form textarea:focus {
+  border-color: #168343;
+  outline: 2px solid rgb(22 131 67 / 15%);
+}
+
+.dealer-voice-tools,
+.dealer-call-tools {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid #edf1ec;
+}
+
+.dealer-voice-tools h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.dealer-record-button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid #168343;
+  border-radius: 8px;
+  background: #fff;
+  color: #168343;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dealer-recording {
+  border-color: #b2332b;
+  background: #fff1ef;
+  color: #a1382d;
+}
+
+.dealer-voice-preview {
+  display: grid;
+  width: 100%;
+  justify-items: start;
+  gap: 10px;
+}
+
+.dealer-voice-preview audio {
+  width: 100%;
+}
+
+.dealer-voice-preview p,
+.dealer-call-tools p {
+  margin: 0;
+  color: #617166;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.dealer-call-tools a:not(.owner-secondary-link) {
+  color: #168343;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+  .client-messages-page {
+    min-height: 0;
+    padding: 16px 12px;
+    border-radius: 16px;
+  }
+
+  .client-messages-page .direct-messages-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .client-messages-retention {
+    max-width: none;
+  }
+
+  .direct-messages-inbox {
+    min-height: 70vh;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .direct-messages-contacts {
+    padding: 14px 6px;
+    border-right: 0;
+    border-bottom: 1px solid rgb(20 55 31 / 22%);
+  }
+
+  .direct-messages-conversation {
+    padding: 12px 8px;
+  }
+
+  .direct-message {
+    max-width: 90%;
+  }
+
+  .contracts-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dealer-chat-backdrop {
+    align-items: end;
+    padding: 0;
+  }
+
+  .dealer-chat-panel {
+    max-height: 92vh;
+    padding: 20px 16px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .dealer-contact-item {
+    align-items: flex-start;
+  }
+}
