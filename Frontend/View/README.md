@@ -17,9 +17,10 @@ or override it with `VITE_AUTH_API_URL` and `VITE_FRUIT_API_URL` in `.env.local`
 Frontend pages should import API clients
 from `src/connection` rather than defining their own backend URLs.
 
-Without `VITE_API_BASE_URL`, the Auth API defaults to
-`http://127.0.0.1:3000/api/auth` and the Fruit API defaults to
-`http://127.0.0.1:4000/api`. The backend must allow the frontend origin in its
+The frontend defaults to the deployed combined backend at
+`https://fruits-salling-application.onrender.com`. Set
+`VITE_API_BASE_URL=http://127.0.0.1:8000` in `.env.local` when using a local
+combined backend. The backend must allow the frontend origin in its
 `CORS_ORIGINS` setting. Cart, order-history, dealer, export, packaging, and
 coming-soon utilities still store state in browser `localStorage`; that data is
 not synchronized to the backend.

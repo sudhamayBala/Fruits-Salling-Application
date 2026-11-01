@@ -30,4 +30,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_BASE_URL
-        value: https://fruit-house-backend.onrender.com
+        value: https://fruits-salling-application.onrender.com
