@@ -174,13 +174,19 @@ app = FastAPI(
 )
 install_error_handling(app)
 
-origins = [
+configured_origins = [
     origin.strip()
     for origin in os.environ.get(
         "CORS_ORIGINS", "http://localhost:2000,http://127.0.0.1:2000"
     ).split(",")
     if origin.strip()
 ]
+production_frontend_origins = (
+    "https://fruits-salling-app.vercel.app",
+    "https://fruits-salling-85mrjoukv-sudha19.vercel.app",
+    "https://fruits-salling-app-git-main-sudha19.vercel.app",
+)
+origins = list(dict.fromkeys((*configured_origins, *production_frontend_origins)))
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
