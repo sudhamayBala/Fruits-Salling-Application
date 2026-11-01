@@ -22,7 +22,7 @@ services:
     name: fruit-house-frontend
     runtime: static
     rootDir: Frontend/View
-    buildCommand: npm ci && npm run build
+    buildCommand: npm ci --include=dev && npm run build
     staticPublishPath: ./dist
     routes:
       - type: rewrite
