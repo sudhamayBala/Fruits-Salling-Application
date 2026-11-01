@@ -1,0 +1,12 @@
+{
+  "framework": null,
+  "installCommand": "npm ci --include=dev --prefix Frontend/View",
+  "buildCommand": "npm run build --prefix Frontend/View",
+  "outputDirectory": "Frontend/View/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
