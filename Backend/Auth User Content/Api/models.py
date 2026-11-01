@@ -5,7 +5,7 @@ from sqlalchemy import Date, DateTime, String, Uuid, select, text
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-from shared.database import build_database_url
+from shared.database import build_async_sqlalchemy_url
 
 
 class Base(DeclarativeBase):
@@ -59,15 +59,7 @@ class OwnerCredential(Base):
     )
 
 
-_database_url = build_database_url()
-if _database_url.startswith("postgresql+asyncpg://"):
-    pass
-elif _database_url.startswith("postgres://"):
-    _database_url = _database_url.replace("postgres://", "postgresql+asyncpg://", 1)
-elif _database_url.startswith("postgresql://"):
-    _database_url = _database_url.replace("postgresql://", "postgresql+asyncpg://", 1)
-
-engine = create_async_engine(_database_url)
+engine = create_async_engine(build_async_sqlalchemy_url())
 SessionFactory = async_sessionmaker(engine, expire_on_commit=False)
 
 

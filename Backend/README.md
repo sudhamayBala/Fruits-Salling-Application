@@ -61,6 +61,10 @@ The root `render.yaml` defines one Render web service for the combined backend
 and one static frontend. The backend Dockerfile starts both existing API
 surfaces in one FastAPI application: authentication remains under `/api/auth`,
 and products, orders, and other Fruit Content routes remain under `/api`.
+The backend Docker build context is `Backend`, so keep
+`Backend/Fruit Content/Api` in the repository as regular tracked files; do not
+replace it with a Git submodule.
+
 Connect the repository to Render and create a Blueprint.
 
 Set `DATABASE_URL` to the hosted PostgreSQL connection string on the backend
@@ -71,6 +75,11 @@ service name or use a custom frontend domain, update `CORS_ORIGINS` and
 `VITE_API_BASE_URL` accordingly. Frontend variables are baked in at build time,
 so redeploy the frontend after changing them. The combined backend serves
 `/health` for Render health checks.
+
+Render does not load `Backend/.env`; it is excluded from the Docker build.
+Configure `DATABASE_URL` in the backend service's Render environment settings.
+If it is missing, startup now reports the missing database configuration
+instead of silently attempting the local default database.
 
 Keep the database URL, JWT secret, and other credentials in Render's
 environment settings; do not commit them to the repository. The backend binds

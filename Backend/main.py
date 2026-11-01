@@ -72,12 +72,17 @@ async def _message_retention_worker(pool: asyncpg.Pool) -> None:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    logger.info("Starting combined backend service.")
     validate_jwt_secret()
+    logger.info("JWT configuration validated.")
     app.state.pool = await create_database_pool()
+    logger.info("Connected to the configured PostgreSQL database.")
     retention_task = None
     try:
         await create_auth_tables()
+        logger.info("Authentication tables initialized.")
         await initialize_models()
+        logger.info("Fruit Content tables initialized.")
         UPLOAD_DIRECTORY.mkdir(parents=True, exist_ok=True)
         await delete_expired_messages(app.state.pool)
         retention_task = asyncio.create_task(
