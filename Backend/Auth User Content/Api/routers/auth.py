@@ -42,13 +42,21 @@ OWNER_EMAIL_PATTERN = re.compile(
 LEGACY_OWNER_EMAIL_PATTERN = re.compile(
     r"^[a-z0-9_-]+\.\d{4}\.[a-z0-9_-]+\.([0-9]{6})\.?@indikan\.com$"
 )
+POSITIONAL_LEGACY_OWNER_EMAIL_PATTERN = re.compile(
+    r"^[a-z0-9-]+\.[a-z0-9-]+\.\d{4}\.([0-9]{5,6})@indkan\.com$"
+)
 
 
 def _owner_employee_id(email: str) -> str | None:
-    match = OWNER_EMAIL_PATTERN.fullmatch(email) or LEGACY_OWNER_EMAIL_PATTERN.fullmatch(
-        email
-    )
-    return match.group(1) if match else None
+    for pattern in (
+        OWNER_EMAIL_PATTERN,
+        LEGACY_OWNER_EMAIL_PATTERN,
+        POSITIONAL_LEGACY_OWNER_EMAIL_PATTERN,
+    ):
+        match = pattern.fullmatch(email)
+        if match:
+            return match.group(1)
+    return None
 
 
 def _pool(request: Request) -> asyncpg.Pool:

@@ -6,6 +6,7 @@ import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
 from types import ModuleType
+from uuid import uuid4
 
 import asyncpg
 from dotenv import load_dotenv
@@ -53,7 +54,9 @@ from shared.error_handling import install_error_handling
 from shared.jwt_auth import validate_jwt_secret
 
 from auth_service.models import close_auth_database, create_auth_tables
+from auth_service.routers.auth import _owner_employee_id
 from auth_service.routers.messages import delete_expired_messages
+from auth_service.services.auth import hash_password
 from fruit_service.Router.product_images import UPLOAD_DIRECTORY
 from fruit_service.settings.database import close_model_database, initialize_models
 
@@ -70,6 +73,67 @@ async def _message_retention_worker(pool: asyncpg.Pool) -> None:
             logger.exception("Unable to delete expired messages")
 
 
+async def _bootstrap_owner_account(pool: asyncpg.Pool) -> None:
+    if os.getenv("OWNER_BOOTSTRAP_ENABLED", "").strip().lower() != "true":
+        return
+
+    email = os.getenv("OWNER_BOOTSTRAP_EMAIL", "").strip().lower()
+    password = os.getenv("OWNER_BOOTSTRAP_PASSWORD", "")
+    full_name = os.getenv("OWNER_BOOTSTRAP_NAME", "Fruit House Owner").strip()
+    if _owner_employee_id(email) is None:
+        raise RuntimeError(
+            "OWNER_BOOTSTRAP_EMAIL must use a supported issued owner email format."
+        )
+    if len(password) < 12:
+        raise RuntimeError(
+            "OWNER_BOOTSTRAP_PASSWORD must contain at least 12 characters."
+        )
+    if not 2 <= len(full_name) <= 120:
+        raise RuntimeError(
+            "OWNER_BOOTSTRAP_NAME must contain between 2 and 120 characters."
+        )
+
+    password_hash = await asyncio.to_thread(hash_password, password)
+    customer_id = uuid4()
+    contract_number = f"OWN-{customer_id.hex.upper()}"
+    async with pool.acquire() as connection:
+        async with connection.transaction():
+            existing_customer_id = await connection.fetchval(
+                "SELECT customer_id FROM customers WHERE lower(email) = $1",
+                email,
+            )
+            if existing_customer_id is not None:
+                logger.info(
+                    "Owner bootstrap skipped because the configured account already exists."
+                )
+                return
+
+            await connection.execute(
+                """
+                INSERT INTO customers (
+                    customer_id, full_name, email, password_hash,
+                    contract_number, role
+                )
+                VALUES ($1, $2, $3, $4, $5, 'admin')
+                """,
+                customer_id,
+                full_name,
+                email,
+                password_hash,
+                contract_number,
+            )
+            await connection.execute(
+                """
+                INSERT INTO auth_owner_credentials (customer_id, email, password_hash)
+                VALUES ($1, $2, $3)
+                """,
+                customer_id,
+                email,
+                password_hash,
+            )
+    logger.info("Initial owner account was created from protected environment settings.")
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("Starting combined backend service.")
@@ -81,6 +145,7 @@ async def lifespan(app: FastAPI):
     try:
         await create_auth_tables()
         logger.info("Authentication tables initialized.")
+        await _bootstrap_owner_account(app.state.pool)
         await initialize_models()
         logger.info("Fruit Content tables initialized.")
         UPLOAD_DIRECTORY.mkdir(parents=True, exist_ok=True)

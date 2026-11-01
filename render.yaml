@@ -16,7 +16,7 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CORS_ORIGINS
-        value: https://fruit-house-frontend.onrender.com
+        value: https://fruits-salling-85mrjoukv-sudha19.vercel.app,https://fruits-salling-app.vercel.app,https://fruits-salling-app-git-main-sudha19.vercel.app
 
   - type: web
     name: fruit-house-frontend

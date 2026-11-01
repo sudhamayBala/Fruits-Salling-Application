@@ -102,8 +102,21 @@ opaque session tokens must sign in again.
 Account type is determined by the registration email: an unused, admin-issued
 owner employee email creates an owner account, while a personal email creates
 a client account. Personal-email registrations are never promoted to
-administrator by first-account bootstrap. An initial administrator must be
-provisioned separately before owner employee IDs can be issued.
+administrator by first-account bootstrap.
+
+To provision an initial owner without putting credentials in source code, set
+`OWNER_BOOTSTRAP_ENABLED=true`, `OWNER_BOOTSTRAP_EMAIL`,
+`OWNER_BOOTSTRAP_PASSWORD` (at least 12 characters), and optionally
+`OWNER_BOOTSTRAP_NAME` in the backend's protected Render environment. On startup,
+the backend creates the account only if that email does not already exist and
+stores a password hash. It never resets an existing account's password. After
+the startup log confirms creation, remove the bootstrap variables and redeploy;
+the account remains in PostgreSQL. Do not use a password that has been shared
+in chat or committed to source control.
+
+The login form defaults to the configured owner email for convenience, but the
+password must be entered privately. After successful authentication, admins
+are routed to `/owner`.
 
 The browser-to-API URLs are centralized in
 `Frontend/View/src/connection/config.ts`. Set `VITE_API_BASE_URL` to the single
@@ -169,10 +182,12 @@ Authentication:
   unique client contract number; issued
   `first-name.joining-year.employee-type.ID@indkan.com` registration creates
   an owner credential and does not require a client contract number. Login
-  checks the matching account credentials and returns the account role so the
-  frontend opens the owner dashboard or client message center. Client IDs are
-  generated UUID primary keys and the owner client directory supports searching
-  by client name or ID.
+  also recognizes previously issued legacy owner emails in the
+  `first-name.employee-type.joining-year.ID@indkan.com` format. All owner
+  logins still require a matching stored credential and password. Login returns
+  the account role so the frontend opens the owner dashboard or client message
+  center. Client IDs are generated UUID primary keys and the owner client
+  directory supports searching by client name or ID.
 - `POST /api/auth/logout`, `GET /api/auth/me`, `PATCH /api/auth/me`
 - `POST /api/auth/password`
 - Authenticated: `GET /api/auth/messages/contacts`,

@@ -8,6 +8,8 @@ const ownerEmailPattern =
   /^[a-z0-9-]+\.\d{4}\.[a-z0-9-]+\.\d{6}@indkan\.com$/i;
 const legacyOwnerEmailPattern =
   /^[a-z0-9_-]+\.\d{4}\.[a-z0-9_-]+\.\d{6}\.?@indikan\.com$/i;
+const positionalLegacyOwnerEmailPattern =
+  /^[a-z0-9-]+\.[a-z0-9-]+\.\d{4}\.\d{5,6}@indkan\.com$/i;
 const ownerEmailDomain = /@indi?kan\.com$/i;
 
 function Login() {
@@ -24,10 +26,11 @@ function Login() {
     if (
       ownerEmailDomain.test(email) &&
       !ownerEmailPattern.test(email) &&
-      !legacyOwnerEmailPattern.test(email)
+      !legacyOwnerEmailPattern.test(email) &&
+      !positionalLegacyOwnerEmailPattern.test(email)
     ) {
       setError(
-        "Universal owner emails are not supported. Use the exact owner email issued in Employee Settings (first-name.joining-year.employee-type.employee-id@indkan.com).",
+        "Use an owner email issued in Employee Settings, either the current or supported legacy format.",
       );
       return;
     }
@@ -44,7 +47,7 @@ function Login() {
       );
     } catch (requestError) {
       setError(requestError instanceof ApiRequestError && requestError.status === 401
-        ? "Email or password is incorrect. Owner accounts must use the exact email issued in Employee Settings and the password chosen when the owner account was registered. There is no shared universal owner password."
+        ? "Email or password is incorrect. Owner accounts must use an email issued in Employee Settings and the password chosen when the owner account was registered."
         : requestError instanceof Error
           ? requestError.message
           : "Unable to log in. Please try again.");
@@ -72,11 +75,11 @@ function Login() {
               autoComplete="email"
               maxLength={254}
               placeholder="you@example.com"
+              defaultValue="fruit.login.2026.99999@indkan.com"
               required
             />
             <span className="auth-help">
-              Owner: use the exact email issued in Employee Settings and your
-              registered password; there is no shared universal owner login.
+              Owner: use an issued owner email and your registered password.
               Clients: use your Gmail address and registered password.
             </span>
           </label>
