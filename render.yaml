@@ -21,9 +21,8 @@ services:
   - type: web
     name: fruit-house-frontend
     runtime: static
-    rootDir: Frontend/View
-    buildCommand: npm ci --include=dev && npm run build
-    staticPublishPath: ./dist
+    buildCommand: npm ci --include=dev --prefix Frontend/View && npm run build --prefix Frontend/View
+    staticPublishPath: Frontend/View/dist
     routes:
       - type: rewrite
         source: /*
