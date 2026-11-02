@@ -1,5 +1,6 @@
 
 import { Link } from 'react-router-dom';
+import fruitBasketImage from '../../assets/Overflowing Tropical Fruit Basket.png';
 import '../../styles/page/Home.css';
 
 function Home() {
@@ -36,7 +37,7 @@ function Home() {
 
       <div className="home-hero-art">
         <img
-          src="/fruit-hero.svg"
+          src={fruitBasketImage}
           alt="Basket filled with fresh fruits"
           className="fruit-basket-image"
         />
