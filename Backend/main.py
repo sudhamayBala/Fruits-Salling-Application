@@ -124,8 +124,10 @@ async def _bootstrap_owner_account(pool: asyncpg.Pool) -> None:
             )
             await connection.execute(
                 """
-                INSERT INTO auth_owner_credentials (customer_id, email, password_hash)
-                VALUES ($1, $2, $3)
+                INSERT INTO auth_owner_credentials (
+                    customer_id, email, password_hash, created_at
+                )
+                VALUES ($1, $2, $3, now())
                 """,
                 customer_id,
                 email,
