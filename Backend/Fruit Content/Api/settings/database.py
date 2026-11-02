@@ -32,6 +32,24 @@ async def initialize_models() -> None:
         await connection.execute(
             text(
                 """
+                CREATE TABLE IF NOT EXISTS product_image_blobs (
+                    image_id UUID PRIMARY KEY,
+                    content_type VARCHAR(32) NOT NULL,
+                    image_data BYTEA NOT NULL,
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+                    CONSTRAINT product_image_blobs_content_type_check
+                        CHECK (content_type IN (
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp'
+                        ))
+                )
+                """
+            )
+        )
+        await connection.execute(
+            text(
+                """
                 ALTER TABLE categories
                 ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ NOT NULL DEFAULT now()
                 """

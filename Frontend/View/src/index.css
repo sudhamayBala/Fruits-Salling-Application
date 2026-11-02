@@ -33,7 +33,6 @@ body,
   align-items: stretch;
   justify-content: flex-start;
   box-sizing: border-box;
-  background: linear-gradient(135deg, #fff3e8, #e8f5df);
 }
 
 .body-content {
@@ -78,7 +77,6 @@ body,
 }
 
 :is(
-  .home-hero,
   .about-hero,
   .about-values,
   .about-value-card,
@@ -130,7 +128,6 @@ body,
 .auth-shell {
   position: relative;
   isolation: isolate;
-  background: linear-gradient(135deg, #fff3e8, #e8f5df);
 }
 
 .auth-shell .body-warper {

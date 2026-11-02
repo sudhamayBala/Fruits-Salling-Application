@@ -99,8 +99,8 @@
   display: grid;
   align-content: center;
   justify-items: center;
-  gap: 8px;
-  font-size: 3rem;
+  padding: 16px;
+  text-align: center;
 }
 
 .catalog-image-placeholder-label {

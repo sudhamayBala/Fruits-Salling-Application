@@ -1,8 +1,8 @@
-import asyncio
 from pathlib import Path
-from uuid import uuid4
+from uuid import UUID, uuid4
 
-from fastapi import APIRouter, Depends, HTTPException, Request, status
+import asyncpg
+from fastapi import APIRouter, Depends, HTTPException, Request, Response, status
 
 from ..dependencies import require_admin
 
@@ -11,15 +11,12 @@ router = APIRouter(prefix="/api/product-images", tags=["product images"])
 UPLOAD_DIRECTORY = Path(__file__).resolve().parents[1] / "uploads"
 MAX_IMAGE_SIZE = 5 * 1024 * 1024
 IMAGE_TYPES = {
-    "image/jpeg": (".jpg", lambda data: data.startswith(b"\xff\xd8\xff")),
-    "image/png": (".png", lambda data: data.startswith(b"\x89PNG\r\n\x1a\n")),
-    "image/webp": (
-        ".webp",
-        lambda data: (
-            len(data) >= 12
-            and data.startswith(b"RIFF")
-            and data[8:12] == b"WEBP"
-        ),
+    "image/jpeg": lambda data: data.startswith(b"\xff\xd8\xff"),
+    "image/png": lambda data: data.startswith(b"\x89PNG\r\n\x1a\n"),
+    "image/webp": lambda data: (
+        len(data) >= 12
+        and data.startswith(b"RIFF")
+        and data[8:12] == b"WEBP"
     ),
 }
 
@@ -61,30 +58,63 @@ async def upload_product_image(
                 detail="Product images must be 5 MB or smaller.",
             )
 
-    extension, matches_signature = image_type
-    if not matches_signature(image):
+    if not image_type(image):
         raise HTTPException(
             status_code=status.HTTP_415_UNSUPPORTED_MEDIA_TYPE,
             detail="The selected file does not match its image format.",
         )
 
-    filename = f"{uuid4().hex}{extension}"
+    image_id = uuid4()
     try:
-        await asyncio.to_thread(
-            _save_image,
-            filename,
+        await request.app.state.pool.execute(
+            """
+            INSERT INTO product_image_blobs (image_id, content_type, image_data)
+            VALUES ($1, $2, $3)
+            """,
+            image_id,
+            content_type,
             bytes(image),
         )
-    except OSError as exc:
+    except asyncpg.PostgresError as exc:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="Unable to save the product image. Please try again.",
+            detail="Unable to save the product image to the database. Please try again.",
         ) from exc
 
-    image_url = str(request.base_url).rstrip("/") + f"/uploads/{filename}"
+    image_url = (
+        str(request.base_url).rstrip("/")
+        + f"/api/product-images/{image_id}"
+    )
     return {"image_url": image_url}
 
 
-def _save_image(filename: str, image: bytes) -> None:
-    UPLOAD_DIRECTORY.mkdir(parents=True, exist_ok=True)
-    (UPLOAD_DIRECTORY / filename).write_bytes(image)
+@router.get("/{image_id}")
+async def get_product_image(image_id: UUID, request: Request) -> Response:
+    try:
+        image = await request.app.state.pool.fetchrow(
+            """
+            SELECT content_type, image_data
+            FROM product_image_blobs
+            WHERE image_id = $1
+            """,
+            image_id,
+        )
+    except asyncpg.PostgresError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Unable to retrieve the product image. Please try again.",
+        ) from exc
+
+    if image is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Product image not found.",
+        )
+    return Response(
+        content=bytes(image["image_data"]),
+        media_type=image["content_type"],
+        headers={
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+        },
+    )

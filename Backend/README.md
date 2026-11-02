@@ -85,11 +85,12 @@ Keep the database URL, JWT secret, and other credentials in Render's
 environment settings; do not commit them to the repository. The backend binds
 to Render's runtime `PORT`.
 
-Product image uploads are written beneath
-`/app/Fruit Content/Api/uploads`. Render's container filesystem is ephemeral
-by default, so the Blueprint attaches a 1 GB persistent disk at that exact path
-and uses the Starter web-service plan. Review Render's current pricing before
-deploying. The disk preserves uploaded files across deploys and restarts.
+New product image uploads are stored as image bytes in the PostgreSQL
+`product_image_blobs` table. Product records keep an `image_url` pointing to
+the public `/api/product-images/{image_id}` endpoint, which serves the image
+bytes back from PostgreSQL. Render's persistent upload disk and `/uploads`
+static route remain available for product images uploaded by older versions;
+re-upload any legacy image whose file is no longer present on that disk.
 
 Both APIs use the same `JWT_SECRET` to sign and verify seven-day access tokens.
 Generate a secret with
@@ -214,8 +215,9 @@ Products and orders:
 - Product management requires a cost price for estimated profit analytics;
   cost price is only returned by the admin management endpoint.
 - Admins upload JPEG, PNG, or WebP product images (up to 5 MB) from their
-  device through `POST /api/product-images`; uploaded files are served under
-  `/uploads/`.
+  device through `POST /api/product-images`; image bytes are stored in
+  PostgreSQL and served from `GET /api/product-images/{image_id}`. Existing
+  `/uploads/` images from older deployments remain supported.
 - Admin-only: `GET /api/orders/manage` supplies order data for the owner
   dashboard. Delivery areas are derived in the frontend without displaying
   full addresses; returns are not currently tracked.

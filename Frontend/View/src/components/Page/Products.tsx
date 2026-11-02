@@ -5,19 +5,6 @@ import type { Product } from "../../connection";
 import { addToCart } from "../../services/cart";
 import "../../styles/page/Products.css";
 
-function productImageFallback(name: string): string {
-  const normalizedName = name.toLowerCase();
-  if (normalizedName.includes("pineapple") || normalizedName.includes("pine apple")) return "🍍";
-  if (normalizedName.includes("tomato")) return "🍅";
-  if (normalizedName.includes("potato")) return "🥔";
-  if (normalizedName.includes("orange")) return "🍊";
-  if (normalizedName.includes("apple")) return "🍎";
-  if (normalizedName.includes("banana")) return "🍌";
-  if (normalizedName.includes("grape")) return "🍇";
-  if (normalizedName.includes("mango")) return "🥭";
-  return "🍊";
-}
-
 function ProductImage({ product }: { product: Product }) {
   const [failed, setFailed] = useState(false);
 
@@ -39,10 +26,9 @@ function ProductImage({ product }: { product: Product }) {
       role="img"
       aria-label={`Image unavailable for ${product.name}`}
     >
-      <span className="catalog-image-placeholder-icon" aria-hidden="true">
-        {productImageFallback(product.name)}
+      <span className="catalog-image-placeholder-label">
+        Product photo unavailable
       </span>
-      <span className="catalog-image-placeholder-label">Image unavailable</span>
     </div>
   );
 }
