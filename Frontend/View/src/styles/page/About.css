@@ -16,9 +16,6 @@
   overflow: hidden;
   border: 1px solid #e7eddf;
   border-radius: 24px;
-  background:
-    radial-gradient(ellipse at 92% 10%, rgb(255 255 255 / 90%), transparent 34%),
-    linear-gradient(125deg, #f3faed 0%, #fff8df 100%);
 }
 
 .about-hero-copy {
@@ -90,12 +87,12 @@
 
 .about-button-secondary {
   border-color: #168343;
-  background: rgb(255 255 255 / 70%);
+  background: transparent;
   color: #168343;
 }
 
 .about-button-secondary:hover {
-  background: #fff;
+  background: transparent;
 }
 
 .about-hero-image-wrap {
@@ -124,7 +121,7 @@
   padding: 10px 14px;
   border: 1px solid rgb(225 233 223 / 85%);
   border-radius: 999px;
-  background: rgb(255 255 255 / 88%);
+  background: transparent;
   color: #526258;
   font-size: 0.82rem;
   font-weight: 600;
@@ -211,7 +208,7 @@
   padding: 22px;
   border: 1px solid #e7ede3;
   border-radius: 13px;
-  background: #fff;
+  background: transparent;
 }
 
 .about-value-number {
@@ -308,7 +305,7 @@
 
 .about-button-light {
   flex: 0 0 auto;
-  background: #fff;
+  background: transparent;
   color: #173b26;
 }
 

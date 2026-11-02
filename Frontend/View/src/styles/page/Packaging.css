@@ -44,7 +44,7 @@
   border: 1px solid #e1e9df;
   border-collapse: collapse;
   border-radius: 12px;
-  background: #fff;
+  background: transparent;
   box-shadow: 0 6px 22px rgb(26 56 34 / 5%);
   text-align: left;
 }
@@ -119,7 +119,7 @@
   padding: 11px 12px;
   border: 1px solid #cfdccf;
   border-radius: 8px;
-  background: #fff;
+  background: transparent;
   color: #23392b;
   font: inherit;
   font-weight: 400;
@@ -162,7 +162,7 @@
   padding: 32px 20px;
   border: 1px solid #e1e9df;
   border-radius: 12px;
-  background: #fff;
+  background: transparent;
   color: #617166;
   text-align: center;
 }
@@ -172,7 +172,7 @@
   padding: 22px;
   border: 1px solid #e1e9df;
   border-radius: 10px;
-  background: #fff;
+  background: transparent;
   color: #617166;
 }
 

@@ -35,7 +35,7 @@
   overflow-x: auto;
   border: 1px solid #e1e9df;
   border-radius: 12px;
-  background: #fff;
+  background: transparent;
   box-shadow: 0 6px 22px rgb(26 56 34 / 5%);
 }
 
@@ -101,7 +101,7 @@
   padding: 8px 9px;
   border: 1px solid #cfdccf;
   border-radius: 7px;
-  background: #fff;
+  background: transparent;
   color: #23392b;
   font: inherit;
   font-size: 0.86rem;
@@ -138,7 +138,7 @@
   padding: 18px;
   border: 1px solid #e1e9df;
   border-radius: 10px;
-  background: #fff;
+  background: transparent;
   color: #617166;
 }
 

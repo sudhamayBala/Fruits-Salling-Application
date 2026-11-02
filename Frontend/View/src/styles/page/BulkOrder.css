@@ -40,7 +40,7 @@
   padding: clamp(20px, 4vw, 32px);
   border: 1px solid #e1e9df;
   border-radius: 14px;
-  background: #fff;
+  background: transparent;
   box-shadow: 0 6px 22px rgb(26 56 34 / 5%);
 }
 
@@ -61,7 +61,7 @@
   padding: 11px 12px;
   border: 1px solid #cfdccf;
   border-radius: 8px;
-  background: #fff;
+  background: transparent;
   color: #23392b;
   font: inherit;
   font-weight: 400;
@@ -131,7 +131,7 @@
   padding: clamp(28px, 6vw, 56px);
   border: 1px solid #e1e9df;
   border-radius: 14px;
-  background: #fff;
+  background: transparent;
   box-shadow: 0 6px 22px rgb(26 56 34 / 5%);
   text-align: center;
 }
@@ -166,7 +166,7 @@
 }
 
 .bulk-secondary-button {
-  background: #fff;
+  background: transparent;
   color: #168343;
 }
 

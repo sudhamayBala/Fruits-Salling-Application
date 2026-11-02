@@ -48,7 +48,7 @@
 .owner-dashboard-home .analytics-card,
 .owner-dashboard-home .owner-navigation {
   border-color: rgb(20 55 31 / 28%);
-  background: rgb(255 255 255 / 14%);
+  background: transparent;
   box-shadow: 0 6px 22px rgb(20 45 26 / 10%);
   backdrop-filter: blur(8px);
 }
@@ -79,7 +79,7 @@
 .owner-dashboard-home .owner-secondary-link,
 .owner-dashboard-home .analytics-donut-center {
   border-color: rgb(20 55 31 / 38%);
-  background: rgb(255 255 255 / 12%);
+  background: transparent;
   color: #102f1c;
 }
 
@@ -143,7 +143,7 @@
 .owner-panel {
   border: 1px solid #e1e9df;
   border-radius: 14px;
-  background: #fff;
+  background: transparent;
   box-shadow: 0 6px 22px rgb(26 56 34 / 5%);
 }
 
@@ -208,7 +208,7 @@
   padding: 8px 10px;
   border: 1px solid #cfdccf;
   border-radius: 8px;
-  background: #fff;
+  background: transparent;
   color: #23392b;
   font: inherit;
 }
@@ -226,7 +226,7 @@
   padding: 17px 19px;
   border: 1px solid #e1e9df;
   border-radius: 12px;
-  background: #fff;
+  background: transparent;
   box-shadow: 0 6px 22px rgb(26 56 34 / 5%);
 }
 
@@ -251,7 +251,7 @@
   padding: 19px;
   border: 1px solid #e1e9df;
   border-radius: 12px;
-  background: #fff;
+  background: transparent;
   box-shadow: 0 6px 22px rgb(26 56 34 / 5%);
 }
 
@@ -346,7 +346,7 @@
   place-items: center;
   padding: 8px;
   border-radius: 50%;
-  background: #fff;
+  background: transparent;
   color: #173b26;
   font-size: 0.88rem;
   font-weight: 750;
@@ -561,7 +561,7 @@
   padding: 9px 11px;
   border: 1px solid #cfdccf;
   border-radius: 8px;
-  background: #fff;
+  background: transparent;
   color: #23392b;
   font: inherit;
   font-weight: 400;
@@ -592,7 +592,7 @@
   padding: 16px;
   border: 1px solid #d5e7d8;
   border-radius: 10px;
-  background: #fff;
+  background: transparent;
 }
 
 .owner-employee-result p {
@@ -652,7 +652,7 @@
   padding: 11px 12px;
   border: 1px solid #cfdccf;
   border-radius: 8px;
-  background: #fff;
+  background: transparent;
   color: #23392b;
   font: inherit;
   font-weight: 400;
@@ -726,7 +726,7 @@
 
 .owner-secondary-link {
   color: #168343;
-  background: #fff;
+  background: transparent;
 }
 
 .owner-text-button {
@@ -865,7 +865,7 @@
   padding: 10px;
   border: 1px solid rgb(225 233 223 / 85%);
   border-radius: 12px;
-  background: rgb(255 255 255 / 88%);
+  background: transparent;
   box-shadow: 0 5px 16px rgb(26 56 34 / 8%);
   backdrop-filter: blur(12px);
 }
@@ -920,7 +920,7 @@
   padding: 20px;
   border: 1px solid #e1e9df;
   border-radius: 14px;
-  background: #fff;
+  background: transparent;
   box-shadow: 0 6px 22px rgb(26 56 34 / 5%);
   color: #617166;
   text-decoration: none;
@@ -990,7 +990,7 @@
   padding: 9px 11px;
   border: 1px solid #cfdccf;
   border-radius: 8px;
-  background: #fff;
+  background: transparent;
   color: #23392b;
   font: inherit;
   font-weight: 400;
