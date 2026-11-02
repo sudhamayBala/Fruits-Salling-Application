@@ -2,19 +2,19 @@
 .home-hero {
   width: 100%;
   min-height: 60vh;
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.9fr);
   align-items: center;
-  justify-content: center;
-  gap: 0;
+  gap: 32px;
   padding: 40px 6%;
   box-sizing: border-box;
-  background: transparent;
+  background: linear-gradient(125deg, #f4faef, #fff8db);
 }
 
 .home-hero-copy {
-  flex: 0 1 760px;
+  width: 100%;
   max-width: 760px;
-  text-align: center;
+  text-align: left;
 }
 
 .home-hero-eyebrow {
@@ -33,8 +33,7 @@
 
 .home-hero-description {
   max-width: 650px;
-  margin-right: auto;
-  margin-left: auto;
+  margin-left: 0;
   color: #158f05;
   font-size: 17px;
   line-height: 1.8;
@@ -43,7 +42,7 @@
 .home-hero-actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 15px;
   margin-top: 28px;
 }
@@ -76,13 +75,44 @@
   color: white;
 }
 
+.home-hero-art {
+  display: flex;
+  width: 100%;
+  min-height: 320px;
+  align-items: center;
+  justify-content: center;
+}
+
+.fruit-basket-image {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  max-height: 390px;
+  object-fit: contain;
+}
+
 @media (max-width: 768px) {
   .home-hero {
+    grid-template-columns: 1fr;
     text-align: center;
+    gap: 12px;
     padding: 35px 20px;
+  }
+
+  .home-hero-copy {
+    text-align: center;
+  }
+
+  .home-hero-description {
+    margin-right: auto;
+    margin-left: auto;
   }
 
   .home-hero-actions {
     justify-content: center;
+  }
+
+  .home-hero-art {
+    min-height: 230px;
   }
 }

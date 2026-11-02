@@ -83,16 +83,30 @@
 
 .catalog-product-image,
 .catalog-image-placeholder {
-  display: grid;
+  display: block;
   width: 100%;
   height: 190px;
-  place-items: center;
+  box-sizing: border-box;
   background: #f3f8f0;
-  object-fit: cover;
+}
+
+.catalog-product-image {
+  padding: 12px;
+  object-fit: contain;
 }
 
 .catalog-image-placeholder {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
   font-size: 3rem;
+}
+
+.catalog-image-placeholder-label {
+  color: #617166;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .catalog-product-info {
@@ -193,5 +207,9 @@
   .catalog-product-image,
   .catalog-image-placeholder {
     height: 140px;
+  }
+
+  .catalog-product-image {
+    padding: 8px;
   }
 }

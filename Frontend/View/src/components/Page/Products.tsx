@@ -5,6 +5,48 @@ import type { Product } from "../../connection";
 import { addToCart } from "../../services/cart";
 import "../../styles/page/Products.css";
 
+function productImageFallback(name: string): string {
+  const normalizedName = name.toLowerCase();
+  if (normalizedName.includes("pineapple") || normalizedName.includes("pine apple")) return "🍍";
+  if (normalizedName.includes("tomato")) return "🍅";
+  if (normalizedName.includes("potato")) return "🥔";
+  if (normalizedName.includes("orange")) return "🍊";
+  if (normalizedName.includes("apple")) return "🍎";
+  if (normalizedName.includes("banana")) return "🍌";
+  if (normalizedName.includes("grape")) return "🍇";
+  if (normalizedName.includes("mango")) return "🥭";
+  return "🍊";
+}
+
+function ProductImage({ product }: { product: Product }) {
+  const [failed, setFailed] = useState(false);
+
+  if (product.image_url && !failed) {
+    return (
+      <img
+        className="catalog-product-image"
+        src={product.image_url}
+        alt={product.name}
+        loading="lazy"
+        onError={() => setFailed(true)}
+      />
+    );
+  }
+
+  return (
+    <div
+      className="catalog-image-placeholder"
+      role="img"
+      aria-label={`Image unavailable for ${product.name}`}
+    >
+      <span className="catalog-image-placeholder-icon" aria-hidden="true">
+        {productImageFallback(product.name)}
+      </span>
+      <span className="catalog-image-placeholder-label">Image unavailable</span>
+    </div>
+  );
+}
+
 function Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -70,16 +112,7 @@ function Products() {
         <div className="catalog-grid">
           {products.map((product) => (
             <article className="catalog-card" key={product.id}>
-              {product.image_url ? (
-                <img
-                  className="catalog-product-image"
-                  src={product.image_url}
-                  alt={product.name}
-                  loading="lazy"
-                />
-              ) : (
-                <div className="catalog-image-placeholder" aria-hidden="true">🍊</div>
-              )}
+              <ProductImage key={`${product.id}:${product.image_url}`} product={product} />
               <div className="catalog-product-info">
                 <p className="catalog-category">
                   {product.category?.name || product.category_name || "Product"}
