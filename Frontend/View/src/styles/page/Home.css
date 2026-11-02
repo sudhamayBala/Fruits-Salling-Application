@@ -1,19 +1,20 @@
 
 .home-hero {
   width: 100%;
-  min-height: 85vh;
+  min-height: 60vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 40px;
+  justify-content: center;
+  gap: 0;
   padding: 40px 6%;
   box-sizing: border-box;
   background: transparent;
 }
 
 .home-hero-copy {
-  flex: 1;
-  max-width: 560px;
+  flex: 0 1 760px;
+  max-width: 760px;
+  text-align: center;
 }
 
 .home-hero-eyebrow {
@@ -31,6 +32,9 @@
 }
 
 .home-hero-description {
+  max-width: 650px;
+  margin-right: auto;
+  margin-left: auto;
   color: #158f05;
   font-size: 17px;
   line-height: 1.8;
@@ -39,6 +43,7 @@
 .home-hero-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 15px;
   margin-top: 28px;
 }
@@ -71,40 +76,13 @@
   color: white;
 }
 
-.home-hero-art {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 0;
-}
-
-.fruit-basket-image {
-  display: block;
-  width: 100%;
-  max-width: 600px;
-  height: auto;
-  object-fit: contain;
-  background: transparent;
-}
-
-/* Mobile responsive */
 @media (max-width: 768px) {
   .home-hero {
-    flex-direction: column;
     text-align: center;
     padding: 35px 20px;
   }
 
   .home-hero-actions {
     justify-content: center;
-  }
-
-  .home-hero-art {
-    width: 100%;
-  }
-
-  .fruit-basket-image {
-    max-width: 420px;
   }
 }
