@@ -186,7 +186,15 @@ production_frontend_origins = (
     "https://fruits-salling-85mrjoukv-sudha19.vercel.app",
     "https://fruits-salling-app-git-main-sudha19.vercel.app",
 )
-origins = list(dict.fromkeys((*configured_origins, *production_frontend_origins)))
+development_frontend_origins = (
+    "http://localhost:2000",
+    "http://127.0.0.1:2000",
+)
+origins = list(dict.fromkeys((
+    *configured_origins,
+    *production_frontend_origins,
+    *development_frontend_origins,
+)))
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
