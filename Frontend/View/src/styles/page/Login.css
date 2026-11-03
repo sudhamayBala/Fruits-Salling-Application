@@ -5,5 +5,25 @@
 }
 
 .auth-shell.auth-login-shell .auth-login-page {
-  background: transparent;
+  background: rgb(249 221 5 / 30%);
+}
+
+.auth-shell.auth-login-shell .auth-card {
+  border-color: #e8c800;
+  background: rgb(255 249 196 / 94%) !important;
+  box-shadow: 0 14px 34px rgb(133 103 0 / 24%) !important;
+}
+
+.auth-shell.auth-login-shell .auth-form input {
+  background: rgb(255 255 255 / 78%);
+}
+
+.auth-shell.auth-login-shell .auth-submit {
+  border-color: #d3b500;
+  background: #f9dd05;
+  color: #26320b;
+}
+
+.auth-shell.auth-login-shell .auth-submit:hover:not(:disabled) {
+  background: #e8c800;
 }
